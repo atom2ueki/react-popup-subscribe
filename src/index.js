@@ -11,12 +11,16 @@ import ReactDOM from 'react-dom'
 import PopupSubscribe from './popup-subscribe'
 
 class Main extends React.Component {
+  Subscribe() {
+    alert(13221);
+  }
+
   render() {
-    // { notes } = this.props;
     return (
       <PopupSubscribe
-        text= {'Subscribe'}
-        delayShow= {5}
+        btnText= {'Subscribe'}
+        delay= {3000}
+        onSubscribe= {this.Subscribe}
       />
     )
   }

@@ -7,36 +7,46 @@
 "use strict";
 
 import './css/index.css';
+import './css/animate.css';
 
 import React from 'react'
 
 class PopupSubscribe extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPopup: false,
+      delay: this.props.delay,
+      onSubscribe: this.props.onSubscribe,
+    };
+  }
+
+  componentDidMount () {
+    setTimeout(function(){
+      this.setState({showPopup: true});
+    }.bind(this), this.props.delay);
+  }
+
+  componentWillUnmount () {
+
+  }
+
+  onClose() {
+    this.setState({ showPopup: false });
+  }
+
   render() {
-    const { text, delayShow } = this.props;
+    const { btnText } = this.props;
     return (
       <div>
-        <div className="card" style={
-          {
-            position: 'fixed',
-            width: '600px',
-            height: '400px',
-            backgroundColor: '#ecf0f1',
-            zIndex: 999,
-          }}>
-          <a href="javascript:void(0)"><i className="fa fa-times"></i></a>
-          <input type="email" style={{width: '400px', height: '40px'}}/>
-          <input type="submit" value={text} />
-        </div>
-        <div style={
-        {
-          position: 'fixed',
-          width: '100%',
-          height: '100%',
-          top: 0,
-          left: 0,
-          background: 'rgba(0,0,0,0.6)',
-          zIndex: 998,
-        }} />
+      {this.state.showPopup ?
+        <div><div className="card animated bounceIn">
+        <a className="close-button" onClick={this.onClose.bind(this)}>&#10006;</a>
+        <p>Get updated newsletter <br/><span className="important">collect your 15% off coupon</span></p>
+        <input type="email" className="email-input" placeholder="Enter your email adress"/>
+        <input type="submit" className="submit-input button-outline" onClick={this.state.onSubscribe} value={btnText} />
+      </div>
+      <div className="overlay"/></div> : null}
       </div>
     )
   }
